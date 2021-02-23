@@ -39,23 +39,35 @@ public class PruebaForfaitNieve {
         String fechaEntrada = LocalDate.parse("2020-11-28").format(formateador);
         String fechaSalida = LocalDate.parse("2021-05-02").format(formateador);
 
-        LocalDate fechaEntrada1 = LocalDate.parse("2020-11-27");
+        LocalDate fechaEntrada1 = LocalDate.parse("2020-11-28");
         LocalDate fechaSalida1 = LocalDate.parse("2021-05-02");
-
 
         // f1.comprobarFechaEntradaYSalida(fechaEntrada,fechaSalida);
 
         LocalDate fechaPrueba1 = LocalDate.parse("2020-11-28");
         System.out.println("Fecha prueba 1: "+fechaPrueba1);
+
+
+
        // f1.comprobarFechaValida(fechaPrueba1);
 
         //f1.comprobarFechaValida(fechaEntrada1,fechaSalida1);
 
         System.out.println("Esta dentro del rango? "+f1.comprobarFechaValida(fechaEntrada1,fechaSalida1));
 
-        LocalDate ff = LocalDate.parse("2020-11-28");
+        LocalDate ff = LocalDate.parse("2020-12-28");
 
       //  System.out.println("Comprobar: "+ff.equals(fechaPrueba1));
+
+        LocalDate fechaPrueba2 = LocalDate.parse("2020-12-27");
+
+        f1.calcularDiasTemporadaEspecial(ff, fechaSalida1);
+
+        f1.calcularDiasTemporadaEspecial2();
+
+        f1.calcularDiasTemporadaAlta();
+
+        f1.calcularDiasTemporadaBaja();
 
     }
 }
