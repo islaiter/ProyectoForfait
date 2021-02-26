@@ -278,4 +278,7 @@ public class ForfaitNieve implements Comparable<ForfaitNieve>{
     public int compareTo(ForfaitNieve o) {
         return getLocalDate().compareTo(o.getLocalDate());
     }
+
+
 }
+
