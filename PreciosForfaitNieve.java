@@ -1,5 +1,6 @@
 package forfaitNieve;
 
+// TODO implementar todos los metodos en esta clase o forfait, NUNCA EN CLASE TEST
 
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -64,23 +65,50 @@ public class PreciosForfaitNieve extends ForfaitNieve{
         return descuentoPrecioColectivo;
     }
 
+    public void mensajeNumeroDiasTemporadaBaja(){
+        Integer numeroDiasTemporadaBaja = super.calcularNumeroDiasTemporadaBaja(this.fechaEntrada,this.fechaSalida);
+        Integer precioDiasTemporadaBaja = numeroDiasTemporadaBaja*50;
+        if (numeroDiasTemporadaBaja==0){
+
+        } else {
+            if (numeroDiasTemporadaBaja>0 && numeroDiasTemporadaBaja<=1){
+                System.out.println("\t"+numeroDiasTemporadaBaja+" dia en Temporada baja: "+precioDiasTemporadaBaja+"€"+" (50€/dia");
+            } else {
+                System.out.println("\t"+numeroDiasTemporadaBaja+" dias en Temporada baja: "+precioDiasTemporadaBaja+"€"+" (50€/dia");
+            }
+        }
+    }
+
     public void mensajeNumeroDiasTemporadaAlta (){
         Integer numeroDiasTemporadaAlta = super.calcularNumeroDiasTemporadaAlta(this.fechaEntrada, this.fechaSalida);
         Double precioDiasTemporadaAlta = numeroDiasTemporadaAlta*50*1.02;
-        String respuesta = "";
         if (numeroDiasTemporadaAlta==0){
         } else {
-            if (numeroDiasTemporadaAlta>=0 && numeroDiasTemporadaAlta<2){
-                respuesta = "\t"+numeroDiasTemporadaAlta+" dia en Temporada alta: "+precioDiasTemporadaAlta+"€"+" 51€/dia";
-                System.out.println(respuesta);
+            if (numeroDiasTemporadaAlta>0 && numeroDiasTemporadaAlta<=1){
+                System.out.println("\t"+numeroDiasTemporadaAlta+" dia en Temporada alta: "+precioDiasTemporadaAlta+"€"+" (51€/dia)");
             } else {
-                respuesta = "\t"+numeroDiasTemporadaAlta+" dias en Temporada alta: "+precioDiasTemporadaAlta+"€"+" 51€/dia";
-                System.out.println(respuesta);
+                System.out.println("\t"+numeroDiasTemporadaAlta+" dias en Temporada alta: "+precioDiasTemporadaAlta+"€"+" (51€/dia)");
             }
         }
 
 
     }
+
+    public void mensajeNumeroDiasTemporadaEspecial(){
+        Integer numeroDiasTemporadaEspecial = super.calcularNumeroDiasTemporadaEspecial(this.fechaEntrada,this.fechaSalida);
+        Double precioDiasTemporadaEspecial = numeroDiasTemporadaEspecial*50*1.03;
+        if (numeroDiasTemporadaEspecial==0){
+        }else{
+            if (numeroDiasTemporadaEspecial>0 && numeroDiasTemporadaEspecial<=1){
+                System.out.println("\t"+numeroDiasTemporadaEspecial+" dia en Temporada alta: "+precioDiasTemporadaEspecial+"€"+" (51.50€/dia)");
+            } else {
+                System.out.println("\t"+numeroDiasTemporadaEspecial+" dias en Temporada alta: "+precioDiasTemporadaEspecial+"€"+" (51.50€/dia)");
+            }
+        }
+
+    }
+    
+    
 
     // Por alguna razon el metodo de abajo no hay que sobreescribirlo ??????
 
