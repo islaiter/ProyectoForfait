@@ -183,6 +183,27 @@ public class ForfaitNieve implements Comparable<ForfaitNieve>{
 
     }
 
+    public void mensajeDiasTotales (LocalDate fechaEntrada, LocalDate fechaSalida){
+        List<LocalDate> diasTemporadaBaja = calcularDiasTemporadaBaja();
+        List<LocalDate> diasEstancia = obtenerFechasEntreDos(fechaEntrada,fechaSalida);
+
+        System.out.println("    Son un total de "+diasEstancia.size()+" dias");
+    }
+
+    public Integer getDiasTemporadaBaja(LocalDate fechaEntrada, LocalDate fechaSalida){
+        Integer numeroDIasTemporadaBaja = 0;
+        Integer precioDiasTemporadaBaja = 0;
+        List<LocalDate> diasTemporadaBaja = calcularDiasTemporadaBaja();
+        List<LocalDate> diasEstancia = obtenerFechasEntreDos(fechaEntrada,fechaSalida);
+        for (int i=0;i<diasEstancia.size();i++){
+            if (diasTemporadaBaja.contains(diasEstancia.get(i))){
+                numeroDIasTemporadaBaja++;
+            }
+        }
+        return numeroDIasTemporadaBaja;
+    }
+
+
     public Integer calcularNumeroDiasTemporadaBaja(LocalDate fechaEntrada, LocalDate fechaSalida){
         // Contador a 0
         Integer numeroDIasTemporadaBaja = 0;
@@ -191,7 +212,7 @@ public class ForfaitNieve implements Comparable<ForfaitNieve>{
         List<LocalDate> diasTemporadaBaja = calcularDiasTemporadaBaja();
         List<LocalDate> diasEstancia = obtenerFechasEntreDos(fechaEntrada,fechaSalida);
 
-        System.out.println("    Son un total de "+diasEstancia.size()+" dias");
+        //
 
         for (int i=0;i<diasEstancia.size();i++){
             if (diasTemporadaBaja.contains(diasEstancia.get(i))){
@@ -282,7 +303,8 @@ public class ForfaitNieve implements Comparable<ForfaitNieve>{
     }
 
     public void temporadaBaja (LocalDate fechaEntrada, LocalDate fechaSalida){
-          mensajeNumeroDiasTemporadaBaja();
+        mensajeDiasTotales(fechaEntrada,fechaSalida);
+        mensajeNumeroDiasTemporadaBaja();
     }
 
     public void temporadaAlta (LocalDate fechaEntrada, LocalDate fechaSalida){
