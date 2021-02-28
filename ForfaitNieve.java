@@ -11,6 +11,17 @@ import java.util.stream.Stream;
 public class ForfaitNieve implements Comparable<ForfaitNieve>{
 
       private LocalDate localDate;
+      private LocalDate fechaEntrada;
+      private LocalDate fechaSalida;
+
+      public ForfaitNieve (LocalDate fechaEntrada, LocalDate fechaSalida){
+          this.fechaEntrada = fechaEntrada;
+          this.fechaSalida = fechaSalida;
+      }
+
+      public ForfaitNieve(){
+
+      }
 
       public boolean comprobarFechaValida(LocalDate fechaEntrada, LocalDate fechaSalida){
 
@@ -183,6 +194,7 @@ public class ForfaitNieve implements Comparable<ForfaitNieve>{
     public Integer numeroDiasTemporadaEspecial(LocalDate fechaEntrada, LocalDate fechaSalida){
           Integer numeroDiasTemporadaEspecial = 0;
           Integer numeroDiasTemporadaEspecial2 = 0;
+          Double precioDiasTemporadaEspecial = 0.0;
           List<LocalDate> temporadaEspecial = calcularDiasTemporadaEspecial2();
           // El dia de salida imaginamos que salen a primera hora, no que se quedan ese dia y luego salen, si no
           // a.datesUntil(b) añade todas las fechas de a hasta b sin incluir b, por eso tenemos que sumar 1
@@ -212,14 +224,15 @@ public class ForfaitNieve implements Comparable<ForfaitNieve>{
 
         if (numeroDiasTemporadaEspecial2==0){
         } else {
-            System.out.println("\t"+numeroDiasTemporadaEspecial2+" dias en Temporada especial.");
+            precioDiasTemporadaEspecial = numeroDiasTemporadaEspecial2 * 50 * 1.03;
+            System.out.println("\t"+numeroDiasTemporadaEspecial2+" dias en Temporada especial: "+precioDiasTemporadaEspecial+"Euros (51.50 Euros/dia)");
         }
           return numeroDiasTemporadaEspecial2;
     }
 
-    public Integer numeroDiasTemporadaAlta(LocalDate fechaEntrada, LocalDate fechaSalida){
-          // Contador a 0
+    public Integer calcularNumeroDiasTemporadaAlta (LocalDate fechaEntrada, LocalDate fechaSalida){
         Integer numeroDiasTemporadaAlta = 0;
+        Double precioDiasTemporadaAlta = 0.0;
         // lista que contiene todos los dias de temporada alta
         List<LocalDate> diasTemporadaAlta = calcularDiasTemporadaAlta();
         List<LocalDate> diasEstancia = obtenerFechasEntreDos(fechaEntrada,fechaSalida);
@@ -230,18 +243,31 @@ public class ForfaitNieve implements Comparable<ForfaitNieve>{
             }
         }
 
+        return numeroDiasTemporadaAlta;
+    }
+
+    public void mensajeNumeroDiasTemporadaAlta (){
+          Integer numeroDiasTemporadaAlta = calcularNumeroDiasTemporadaAlta(this.fechaEntrada, this.fechaSalida);
         if (numeroDiasTemporadaAlta==0){
         } else {
-            System.out.println("\t"+numeroDiasTemporadaAlta+" dias en Temporada alta.");
+            if (numeroDiasTemporadaAlta>=0 && numeroDiasTemporadaAlta<2){
+                System.out.println("\t"+numeroDiasTemporadaAlta+" dia en Temporada alta.");
+            } else {
+                System.out.println("\t"+numeroDiasTemporadaAlta+" dias en Temporada alta.");
+            }
         }
 
-        return numeroDiasTemporadaAlta;
+    }
+
+    public void temporadaAlta (LocalDate fechaEntrada, LocalDate fechaSalida){
+          mensajeNumeroDiasTemporadaAlta();
 
     }
 
     public Integer numeroDiasTemporadaBaja(LocalDate fechaEntrada, LocalDate fechaSalida){
         // Contador a 0
         Integer numeroDIasTemporadaBaja = 0;
+        Integer precioDiasTemporadaBaja = 0;
         // lista que contiene todos los dias de temporada alta
         List<LocalDate> diasTemporadaBaja = calcularDiasTemporadaBaja();
         List<LocalDate> diasEstancia = obtenerFechasEntreDos(fechaEntrada,fechaSalida);
@@ -256,7 +282,8 @@ public class ForfaitNieve implements Comparable<ForfaitNieve>{
 
         if (numeroDIasTemporadaBaja==0){
         } else {
-            System.out.println("\t"+numeroDIasTemporadaBaja+" dias en Temporada baja.");
+            precioDiasTemporadaBaja = 50*numeroDIasTemporadaBaja;
+            System.out.println("\t"+numeroDIasTemporadaBaja+" dias en Temporada baja: "+precioDiasTemporadaBaja+"euros (50 euros/dia)");
         }
 
 
