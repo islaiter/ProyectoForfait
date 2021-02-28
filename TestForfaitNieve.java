@@ -17,7 +17,7 @@ public class TestForfaitNieve {
         DateTimeFormatter formateadorFecha = DateTimeFormatter.BASIC_ISO_DATE;
         ValidadorFecha validator2 = new ValidadorFechaLocalDate(formateadorFecha);
 
-        ForfaitNieve f1 = new ForfaitNieve();
+
 
         System.out.println("Entrada");
         System.out.println("Dia");
@@ -41,15 +41,16 @@ public class TestForfaitNieve {
         LocalDate fEntrada = LocalDate.parse(fechaEntrada);
         LocalDate fSalida = LocalDate.parse(fechaSalida);
 
+        ForfaitNieve f1 = new ForfaitNieve(fEntrada,fSalida);
 
-        f1.calcularDiasTemporadaEspecial2();
+
+        f1.calcularDiasTemporadaEspecial();
         f1.calcularDiasTemporadaAlta();
         f1.calcularDiasTemporadaBaja();
-        f1.numeroDiasTemporadaBaja(fEntrada, fSalida);
-        f1.numeroDiasTemporadaAlta(fEntrada, fSalida);
-        f1.numeroDiasTemporadaEspecial(fEntrada, fSalida);
-
-
+        //f1.numeroDiasTemporadaBaja(fEntrada, fSalida);
+        f1.temporadaBaja(fEntrada,fSalida);
+        f1.temporadaAlta(fEntrada, fSalida);
+        f1.temporadaEspecial(fEntrada, fSalida);
 
     }
 }
