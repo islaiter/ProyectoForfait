@@ -11,6 +11,17 @@ import java.util.stream.Stream;
 public class ForfaitNieve implements Comparable<ForfaitNieve>{
 
       private LocalDate localDate;
+      private LocalDate fechaEntrada;
+      private LocalDate fechaSalida;
+
+      public ForfaitNieve (LocalDate fechaEntrada, LocalDate fechaSalida){
+          this.fechaEntrada = fechaEntrada;
+          this.fechaSalida = fechaSalida;
+      }
+
+      public ForfaitNieve(){
+
+      }
 
       public boolean comprobarFechaValida(LocalDate fechaEntrada, LocalDate fechaSalida){
 
@@ -25,16 +36,8 @@ public class ForfaitNieve implements Comparable<ForfaitNieve>{
                 (fechaSalida.isBefore(fechaMaxima)||fechaSalida.equals(fechaMaxima));
     }
 
-    public boolean compruebaFechas(){
-          /* Dada las fechas por el usuario (que entrar por scanner en la clase test
-          tenemos que ver primero que la fecha es valida, con el metodo esValida, luego que dicha fecha
-          esta dentro de la temporada global , con el metodo comprobarFechaValida y por ultimo, ver
-          la cantidad de dias de temporada alta,baja y especial que tiene
-          */
-          return true;
-    }
 
-    public void calcularDiasTemporadaEspecial(LocalDate fechaEntrada, LocalDate fechaSalida){
+    /*public void calcularDiasTemporadaEspecial2(LocalDate fechaEntrada, LocalDate fechaSalida){
           ArrayList<LocalDate> temporadaEspecial = new ArrayList<LocalDate>();
           Integer numeroDiasTemporadaAlta = 0;
 
@@ -64,9 +67,9 @@ public class ForfaitNieve implements Comparable<ForfaitNieve>{
               System.out.println("Fechas no validas");
           }
         System.out.println("El numero de dias de temporada alta es: "+numeroDiasTemporadaAlta);
-    }
+    }*/
 
-    public List<LocalDate> calcularDiasTemporadaEspecial2 (){
+    public List<LocalDate> calcularDiasTemporadaEspecial (){
           List<LocalDate> listaFechas = new ArrayList<LocalDate>();
           List<LocalDate> listaFechas2 = new ArrayList<LocalDate>();
           List<LocalDate> diasTemporadaEspecial = new ArrayList<LocalDate>();
@@ -120,7 +123,7 @@ public class ForfaitNieve implements Comparable<ForfaitNieve>{
           periodoFechas4 = obtenerFechasEntreDos(LocalDate.parse("2021-03-27"),LocalDate.parse("2021-04-05"));
           // Desde el 1 de Diciembre, para que no pille luego como dias de temporada alta el ultimo finde de Noviembre
           diasTotales = obtenerFechasEntreDos(LocalDate.parse("2020-12-01"),LocalDate.parse("2021-04-03"));
-          listaDiasEspeciales = calcularDiasTemporadaEspecial2();
+          listaDiasEspeciales = calcularDiasTemporadaEspecial();
 
           // Recorremos todos los dias entre el 1 de Diciembre y el 3 de Abril para ver que dias son de fin de semana
           // En caso de ser un dia de fin de semana, se añade el elemento a la lista de nombre diasFinDeSemana
@@ -168,7 +171,7 @@ public class ForfaitNieve implements Comparable<ForfaitNieve>{
           // Cargamos los dias correspondientes, usando los metodos ya creados
 
           diasTemporadaAlta = calcularDiasTemporadaAlta();
-          diasTemporadaEspecial = calcularDiasTemporadaEspecial2();
+          diasTemporadaEspecial = calcularDiasTemporadaEspecial();
 
           // Ahora a la lista de dias de temporada baja, eliminamos todos los de las otras dos listas
            diasTemporadaBaja.removeAll(diasTemporadaAlta);
@@ -180,68 +183,10 @@ public class ForfaitNieve implements Comparable<ForfaitNieve>{
 
     }
 
-    public Integer numeroDiasTemporadaEspecial(LocalDate fechaEntrada, LocalDate fechaSalida){
-          Integer numeroDiasTemporadaEspecial = 0;
-          Integer numeroDiasTemporadaEspecial2 = 0;
-          List<LocalDate> temporadaEspecial = calcularDiasTemporadaEspecial2();
-          // El dia de salida imaginamos que salen a primera hora, no que se quedan ese dia y luego salen, si no
-          // a.datesUntil(b) añade todas las fechas de a hasta b sin incluir b, por eso tenemos que sumar 1
-
-        List<LocalDate> diasEstancia = obtenerFechasEntreDos(fechaEntrada,fechaSalida);
-
-          // Esto es una mierda porque el tiempo de ejecucion es N^2 pero sirve de momento
-
-          /* for (int i=0;i<temporadaEspecial.size();i++){
-              for (int j=0;j<diasEstancia.size();j++)
-                  if (temporadaEspecial.get(i).equals(diasEstancia.get(j))){
-                      numeroDiasTemporadaEspecial++;
-              }
-          } */
-
-          // Este esta mejor, el tiempo de ejecucion ya no es cuadratico
-          // Dada la lista de dias que el usuario esta de estancia, si ese dia esta dentro de los idas especiales
-          // suma 1 al contador de dias de temporada especial
-
-          for (int i=0;i<diasEstancia.size();i++){
-              if (temporadaEspecial.contains(diasEstancia.get(i))){
-                  numeroDiasTemporadaEspecial2++;
-              }
-          }
-
-
-
-        if (numeroDiasTemporadaEspecial2==0){
-        } else {
-            System.out.println("\t"+numeroDiasTemporadaEspecial2+" dias en Temporada especial.");
-        }
-          return numeroDiasTemporadaEspecial2;
-    }
-
-    public Integer numeroDiasTemporadaAlta(LocalDate fechaEntrada, LocalDate fechaSalida){
-          // Contador a 0
-        Integer numeroDiasTemporadaAlta = 0;
-        // lista que contiene todos los dias de temporada alta
-        List<LocalDate> diasTemporadaAlta = calcularDiasTemporadaAlta();
-        List<LocalDate> diasEstancia = obtenerFechasEntreDos(fechaEntrada,fechaSalida);
-
-        for (int i=0;i<diasEstancia.size();i++){
-            if (diasTemporadaAlta.contains(diasEstancia.get(i))){
-                numeroDiasTemporadaAlta++;
-            }
-        }
-
-        if (numeroDiasTemporadaAlta==0){
-        } else {
-            System.out.println("\t"+numeroDiasTemporadaAlta+" dias en Temporada alta.");
-        }
-
-        return numeroDiasTemporadaAlta;
-
-    }
-
-    public Integer numeroDiasTemporadaBaja(LocalDate fechaEntrada, LocalDate fechaSalida){
+    public Integer calcularNumeroDiasTemporadaBaja(LocalDate fechaEntrada, LocalDate fechaSalida){
         // Contador a 0
         Integer numeroDIasTemporadaBaja = 0;
+        Integer precioDiasTemporadaBaja = 0;
         // lista que contiene todos los dias de temporada alta
         List<LocalDate> diasTemporadaBaja = calcularDiasTemporadaBaja();
         List<LocalDate> diasEstancia = obtenerFechasEntreDos(fechaEntrada,fechaSalida);
@@ -254,15 +199,99 @@ public class ForfaitNieve implements Comparable<ForfaitNieve>{
             }
         }
 
-        if (numeroDIasTemporadaBaja==0){
-        } else {
-            System.out.println("\t"+numeroDIasTemporadaBaja+" dias en Temporada baja.");
-        }
-
-
 
         return numeroDIasTemporadaBaja;
 
+    }
+
+    public Integer calcularNumeroDiasTemporadaAlta (LocalDate fechaEntrada, LocalDate fechaSalida){
+        Integer numeroDiasTemporadaAlta = 0;
+        Double precioDiasTemporadaAlta = 0.0;
+        // lista que contiene todos los dias de temporada alta
+        List<LocalDate> diasTemporadaAlta = calcularDiasTemporadaAlta();
+        List<LocalDate> diasEstancia = obtenerFechasEntreDos(fechaEntrada,fechaSalida);
+
+        for (int i=0;i<diasEstancia.size();i++){
+            if (diasTemporadaAlta.contains(diasEstancia.get(i))){
+                numeroDiasTemporadaAlta++;
+            }
+        }
+
+        return numeroDiasTemporadaAlta;
+    }
+
+    public Integer calcularNumeroDiasTemporadaEspecial(LocalDate fechaEntrada, LocalDate fechaSalida){
+
+        Integer numeroDiasTemporadaEspecial2 = 0;
+        List<LocalDate> temporadaEspecial = calcularDiasTemporadaEspecial();
+        // El dia de salida imaginamos que salen a primera hora, no que se quedan ese dia y luego salen, si no
+        // a.datesUntil(b) añade todas las fechas de a hasta b sin incluir b, por eso tenemos que sumar 1
+
+        List<LocalDate> diasEstancia = obtenerFechasEntreDos(fechaEntrada,fechaSalida);
+
+        // Dada la lista de dias que el usuario esta de estancia, si ese dia esta dentro de los idas especiales
+        // suma 1 al contador de dias de temporada especial
+
+        for (int i=0;i<diasEstancia.size();i++){
+            if (temporadaEspecial.contains(diasEstancia.get(i))){
+                numeroDiasTemporadaEspecial2++;
+            }
+        }
+
+        return numeroDiasTemporadaEspecial2;
+    }
+
+
+    public void mensajeNumeroDiasTemporadaBaja(){
+        Integer numeroDIasTemporadaBaja = calcularNumeroDiasTemporadaBaja(this.fechaEntrada,this.fechaSalida);
+        if (numeroDIasTemporadaBaja==0){
+
+        } else {
+            if (numeroDIasTemporadaBaja>0 && numeroDIasTemporadaBaja<=1){
+                System.out.println("\t"+numeroDIasTemporadaBaja+" dia en Temporada baja.");
+            } else {
+                System.out.println("\t"+numeroDIasTemporadaBaja+" dias en Temporada baja.");
+            }
+        }
+    }
+
+    public void mensajeNumeroDiasTemporadaAlta (){
+          Integer numeroDiasTemporadaAlta = calcularNumeroDiasTemporadaAlta(this.fechaEntrada, this.fechaSalida);
+        if (numeroDiasTemporadaAlta==0){
+        } else {
+            if (numeroDiasTemporadaAlta>0 && numeroDiasTemporadaAlta<1){
+                System.out.println("\t"+numeroDiasTemporadaAlta+" dia en Temporada alta.");
+            } else {
+                System.out.println("\t"+numeroDiasTemporadaAlta+" dias en Temporada alta.");
+            }
+        }
+
+    }
+
+    public void mensajeNumeroDiasTemporadaEspecial (){
+        Integer numeroDiasTemporadaEspecial = calcularNumeroDiasTemporadaEspecial(this.fechaEntrada, this.fechaSalida);
+        if (numeroDiasTemporadaEspecial==0){
+        } else {
+            if (numeroDiasTemporadaEspecial>0 && numeroDiasTemporadaEspecial<1){
+                System.out.println("\t"+numeroDiasTemporadaEspecial+" dia en Temporada especial.");
+            } else {
+                System.out.println("\t"+numeroDiasTemporadaEspecial+" dias en Temporada especial.");
+            }
+        }
+
+    }
+
+    public void temporadaBaja (LocalDate fechaEntrada, LocalDate fechaSalida){
+          mensajeNumeroDiasTemporadaBaja();
+    }
+
+    public void temporadaAlta (LocalDate fechaEntrada, LocalDate fechaSalida){
+          mensajeNumeroDiasTemporadaAlta();
+
+    }
+
+    public void temporadaEspecial (LocalDate fechaEntrada,LocalDate fechaSalida){
+        mensajeNumeroDiasTemporadaEspecial();
     }
 
     public List<LocalDate> obtenerFechasEntreDos (LocalDate comienzo, LocalDate fin){
