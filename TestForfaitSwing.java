@@ -97,25 +97,79 @@ public class TestForfaitSwing {
 
 
 
-        // Creamos 6 elementos JLabel, dia mes y año de ambas fechas
+        //fecha entrada fecha salida labels
+        JLabel diaEntrada = new JLabel("Dia");
+        JLabel mesEntrada = new JLabel("Mes");
+        JLabel anhoEntrada = new JLabel("Año");
+        JLabel diaSalida = new JLabel("Dia");
+        JLabel mesSalida = new JLabel("Mes");
+        JLabel anhoSalida = new JLabel("Año");
+        //fecha entrada fecha salida spinners
 
-        JLabel diaFechaEntrada = new JLabel("Dia");
-        JLabel mesFechaEntrada = new JLabel("Mes");
-        JLabel anioFechaEntrada = new JLabel("Año");
+        Date today = new Date();
+        String months[] = { "Enero", "Febrero", "Marzo", "Abril", "Mayo",
+                "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre",
+                "December" };
 
-        JLabel diaFechaSalida = new JLabel("Dia");
-        JLabel mesFechaSalida = new JLabel("Mes");
-        JLabel anioFechaSalida = new JLabel("Año");
 
-        // Añadimos los elementos correspondientes a cada una de las dos fechas
+        //mes entrada y salida
 
-        fechaEntrada.add(diaFechaEntrada);
-        fechaEntrada.add(mesFechaEntrada);
-        fechaEntrada.add(anioFechaEntrada);
+        SpinnerModel MonthModelSalida = new SpinnerListModel(months);
+        SpinnerModel  MonthModelEntrada = new SpinnerListModel(months);
 
-        fechaSalida.add(diaFechaSalida);
-        fechaSalida.add(mesFechaSalida);
-        fechaSalida.add(anioFechaSalida);
+        //dia entrada y salida
+        JSpinner spinnerDiaSalida = new JSpinner(new SpinnerDateModel(today, null, null, Calendar.DAY_OF_MONTH));
+        JSpinner spinnerDiaEntrada = new JSpinner(new SpinnerDateModel(today, null, null, Calendar.DAY_OF_MONTH));
+
+        //anho entrada y salida
+        JSpinner spinnerAnhoSalida= new JSpinner(new SpinnerDateModel(today, null, null, Calendar.YEAR));
+        JSpinner spinnerAnhoEntrada = new JSpinner(new SpinnerDateModel(today, null, null, Calendar.YEAR));
+
+        ///mes entrada salida
+        JSpinner spinnerMonthModelSalida = new JSpinner(MonthModelSalida);
+        JSpinner spinnerMonthModelEntrada = new JSpinner(MonthModelEntrada);
+
+
+        //los formatos de fechas
+        JSpinner.DateEditor editorDs = new JSpinner.DateEditor(spinnerDiaSalida, "dd");
+        JSpinner.DateEditor editorYs = new JSpinner.DateEditor(spinnerAnhoSalida, "yyyy");
+
+
+        JSpinner.DateEditor editorDe = new JSpinner.DateEditor(spinnerDiaEntrada, "dd");
+        JSpinner.DateEditor editorYe = new JSpinner.DateEditor(spinnerAnhoEntrada, "yyyy");
+
+
+
+        //Editor de dia
+        spinnerDiaEntrada.setEditor(editorDe);
+        spinnerDiaSalida.setEditor(editorDs);
+
+        //Editor de anho
+        spinnerAnhoEntrada.setEditor(editorYe);
+        spinnerAnhoSalida.setEditor(editorYs);
+
+
+
+        //diaSalida
+        fechaSalida.add(diaSalida);
+        fechaSalida.add(spinnerDiaSalida);
+        //mesSalida
+        fechaSalida.add(mesSalida);
+        fechaSalida.add(spinnerMonthModelSalida);
+        //
+        fechaSalida.add(anhoSalida);
+        fechaSalida.add(spinnerAnhoSalida);
+
+        //diaEntrada
+        fechaEntrada.add(diaEntrada);
+        fechaEntrada.add(spinnerDiaEntrada);
+        //mesEntrada
+        fechaEntrada.add(mesEntrada);
+        fechaEntrada.add(spinnerMonthModelEntrada);
+
+        //AnhoEntrada
+        fechaEntrada.add(anhoEntrada);
+        fechaEntrada.add(spinnerAnhoEntrada);
 
 
         // Hacemos el split de panel central en dos
